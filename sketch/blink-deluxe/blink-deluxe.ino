@@ -55,7 +55,7 @@ void setup()
 
   // // This program uses the rx/tx pins as digital pins
   // // DON'T USE SERAIL MONITOR IF YOU ABSOLUTELY DON'T HAVE TO
-  // Serial.begin(9600); // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600); // initialize serial communication at 9600 bits per second:
   // Serial.println("Initializing...");
 
   // Serial.println("Initializing GLCD...");
@@ -112,25 +112,30 @@ void update(Menu *menu)
   // Check buttons
   if (check_button_down(DOWN_PIN, &down_pressed, true, &down_timestamp, &down_hold_time))
   {
+    Serial.println("Down pressed");
     menu->down();
   }
   // For some reason D2 (UP_PIN) reads HIGH for a split second when D3 (DOWN_PIN) is pressed
   if (check_button_down(UP_PIN, &up_pressed, true, &up_timestamp, &up_hold_time) && !down_pressed)
   {
+    Serial.println("Up pressed");
     menu->up();
   }
   if (check_button_down(LEFT_PIN, &left_pressed, true, &left_timestamp, &left_hold_time))
   {
+    Serial.println("Left pressed");
     menu->left();
   }
   if (check_button_down(RIGHT_PIN, &right_pressed, true, &right_timestamp, &right_hold_time))
   {
+    Serial.println("Right pressed");
     menu->right();
   }
   // FIXME: Select button makes the program go bananas
-  // if (check_button_down(SELECT_PIN, &select_pressed, false)) {
-  //   menu->select();
-  // }
+  if (check_button_down(SELECT_PIN, &select_pressed, false)) {
+    Serial.println("Select pressed");
+    menu->select();
+  }
 }
 
 void draw(Menu *menu)
