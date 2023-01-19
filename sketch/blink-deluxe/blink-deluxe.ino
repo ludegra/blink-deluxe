@@ -13,7 +13,7 @@
 #define DOWN_PIN 3
 #define LEFT_PIN 12
 #define RIGHT_PIN 13
-#define SELECT_PIN 1
+#define SELECT_PIN A7
 
 // Button states
 boolean up_pressed = false;
@@ -38,7 +38,11 @@ int left_hold_time = 0;
 int right_hold_time = 0;
 
 Menu main_menu;
-MenuItem main_menu_items[] = {MenuVariable("On time", 100, 0, 100000, 1), MenuVariable("Off time", 100, 0, 100000, 1)};
+
+MenuItem* main_menu_items[] = {
+  new MenuVariable("On time", 100, 0, 100000, 1),
+  new MenuVariable("Off time", 100, 0, 100000, 1)
+};
 
 void setup()
 {
@@ -49,17 +53,19 @@ void setup()
   pinMode(RIGHT_PIN, INPUT);
   pinMode(SELECT_PIN, INPUT);
 
-  Serial.begin(9600); // initialize serial communication at 9600 bits per second:
-  Serial.println("Initializing...");
+  // // This program uses the rx/tx pins as digital pins
+  // // DON'T USE SERAIL MONITOR IF YOU ABSOLUTELY DON'T HAVE TO
+  // Serial.begin(9600); // initialize serial communication at 9600 bits per second:
+  // Serial.println("Initializing...");
 
-  Serial.println("Initializing GLCD...");
+  // Serial.println("Initializing GLCD...");
   // Initialize the GLCD
   GLCD.Init();
 
   // Select the font for the default text area
   GLCD.SelectFont(System5x7);
 
-  Serial.println("Initializing menu...");
+  // Serial.println("Initializing menu...");
 
   main_menu = Menu(main_menu_items, sizeof(main_menu_items) / sizeof(main_menu_items[0]));
 
@@ -106,23 +112,19 @@ void update(Menu *menu)
   // Check buttons
   if (check_button_down(DOWN_PIN, &down_pressed, true, &down_timestamp, &down_hold_time))
   {
-    Serial.println("Down pressed");
     menu->down();
   }
   // For some reason D2 (UP_PIN) reads HIGH for a split second when D3 (DOWN_PIN) is pressed
   if (check_button_down(UP_PIN, &up_pressed, true, &up_timestamp, &up_hold_time) && !down_pressed)
   {
-    Serial.println("Up pressed");
     menu->up();
   }
   if (check_button_down(LEFT_PIN, &left_pressed, true, &left_timestamp, &left_hold_time))
   {
-    Serial.println("Left pressed");
     menu->left();
   }
   if (check_button_down(RIGHT_PIN, &right_pressed, true, &right_timestamp, &right_hold_time))
   {
-    Serial.println("Right pressed");
     menu->right();
   }
   // FIXME: Select button makes the program go bananas

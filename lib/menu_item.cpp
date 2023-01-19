@@ -6,6 +6,10 @@ MenuItem::MenuItem(String name, void (*select_callback)(void)) {
     this->_select_callback = select_callback;
 }
 
+String MenuItem::getType() {
+    return "MenuItem";
+}
+
 String MenuItem::getName() {
     return _name;
 }
@@ -38,6 +42,10 @@ MenuVariable::MenuVariable(String name, int default_value, int min, int max, int
     this->_min = min;
     this->_max = max;
     this->_step = step;
+}
+
+String MenuVariable::getType() {
+    return "MenuVariable";
 }
 
 int MenuVariable::getValue() {

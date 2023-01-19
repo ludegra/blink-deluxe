@@ -5,12 +5,12 @@
 
 class Menu {
 private:
-    MenuItem* _items;
+    MenuItem** _items;
     int _size;
     int _selected;
     
 public:
-    Menu(MenuItem* items, int size);
+    Menu(MenuItem** items, int size);
     Menu();
     void select();
     void up();
@@ -19,7 +19,7 @@ public:
     void right();
     void draw();
     int get_size();
-    MenuItem* get_items();
+    MenuItem** getItems();
 };
 
 #endif

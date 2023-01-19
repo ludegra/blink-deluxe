@@ -1,17 +1,20 @@
 #include <menu.h>
 #include <openGLCD.h>
 
-Menu::Menu(MenuItem* items, int size) {
+Menu::Menu(MenuItem** items, int size) {
     this->_items = items;
     this->_size = size;
 
-    Serial.println("Menu created");
-    Serial.print(_size);
-    Serial.println(" items:");
-    for (int i = 0; i < _size; i++) {
-        Serial.print("  ");
-        Serial.println(_items[i].getName());
-    }
+    // Serial.println("Menu created");
+    // Serial.print(_size);
+    // Serial.println(" items:");
+    // for (int i = 0; i < _size; i++) {
+    //     Serial.print("  ");
+    //     Serial.print(_items[i]->getName());
+    //     Serial.print(" (");
+    //     Serial.print(_items[i]->getType());
+    //     Serial.println(")");
+    // }
     this->_selected = 0;
 }
 
@@ -19,7 +22,7 @@ Menu::Menu() {
 }
 
 void Menu::select() {
-    _items[_selected].select();
+    _items[_selected]->select();
 }
 
 void Menu::up() {
@@ -37,11 +40,11 @@ void Menu::down() {
 }
 
 void Menu::left() {
-    _items[_selected].left();
+    _items[_selected]->left();
 }
 
 void Menu::right() {
-    _items[_selected].right();
+    _items[_selected]->right();
 }
 
 void Menu::draw() {
@@ -52,7 +55,7 @@ void Menu::draw() {
         } else {
             GLCD.print(" ");
         }
-        GLCD.print(_items[i].getDisplayString());
+        GLCD.print(_items[i]->getDisplayString());
     }
 }
 
@@ -60,6 +63,6 @@ int Menu::get_size() {
     return _size;
 }
 
-MenuItem* Menu::get_items() {
+MenuItem** Menu::getItems() {
     return _items;
 }

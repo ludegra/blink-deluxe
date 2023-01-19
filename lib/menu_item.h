@@ -12,6 +12,7 @@ public:
     String getName();
     void select();
 
+    virtual String getType();
     virtual int getValue();
     virtual String getDisplayString();
     virtual void left();
@@ -27,6 +28,8 @@ private:
     int _step;
 public:
     MenuVariable(String name, int default_value, int min, int max, int step);
+
+    String getType();
     int getValue();
     String getDisplayString();
     void left();
