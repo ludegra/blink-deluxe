@@ -33,7 +33,7 @@ void setup()
 
   // // This program uses the rx/tx pins as digital pins
   // // DON'T USE SERAIL MONITOR IF YOU ABSOLUTELY DON'T HAVE TO
-  // Serial.begin(9600); // initialize serial communication at 9600 bits per second:
+  Serial.begin(9600); // initialize serial communication at 9600 bits per second:
   // Serial.println("Initializing...");
 
   // Serial.println("Initializing GLCD...");
