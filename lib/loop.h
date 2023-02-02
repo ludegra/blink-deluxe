@@ -4,7 +4,11 @@
 #include <Arduino.h>
 #include <menu.h>
 
-void update(Menu *menu);
-void draw(Menu *menu);
+class Loop
+{
+public:
+    static void update(Menu *menu);
+    static void draw(Menu *menu);
+};
 
 #endif

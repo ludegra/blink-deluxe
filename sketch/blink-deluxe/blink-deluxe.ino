@@ -14,6 +14,7 @@
 #define LEFT_PIN 12
 #define RIGHT_PIN 13
 #define SELECT_PIN A7
+#define LED_PIN A5
 
 Menu main_menu;
 
@@ -30,6 +31,7 @@ void setup()
   pinMode(LEFT_PIN, INPUT);
   pinMode(RIGHT_PIN, INPUT);
   pinMode(SELECT_PIN, INPUT);
+  pinMode(LED_PIN, OUTPUT);
 
   // // This program uses the rx/tx pins as digital pins
   // // DON'T USE SERAIL MONITOR IF YOU ABSOLUTELY DON'T HAVE TO
@@ -58,10 +60,10 @@ void setup()
 void loop()
 {
   // Serial.println("Updating...");
-  update(&main_menu);
+  Loop::update(&main_menu);
 
   // Serial.println("Drawing...");
-  draw(&main_menu);
+  Loop::draw(&main_menu);
 
   delay(20);
 }

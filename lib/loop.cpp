@@ -67,7 +67,7 @@ bool check_button_down(int pin, bool *state, bool allow_hold, unsigned long *tim
   return false;
 }
 
-void update(Menu *menu)
+void Loop::update(Menu *menu)
 {
 
   // Check buttons
@@ -89,12 +89,12 @@ void update(Menu *menu)
     menu->right();
   }
   // FIXME: Select button makes the program go bananas
-  // if (check_button_down(SELECT_PIN, &select_pressed, false)) {
-  //   menu->select();
-  // }
+  if (check_button_down(SELECT_PIN, &select_pressed, false)) {
+    menu->select();
+  }
 }
 
-void draw(Menu *menu)
+void Loop::draw(Menu *menu)
 {
   GLCD.ClearScreen();
   menu->draw();

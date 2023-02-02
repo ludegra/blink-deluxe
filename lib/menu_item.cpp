@@ -1,5 +1,6 @@
 #include <menu_item.h>
 #include <menu.h>
+#include <loop.h>
 
 // MenuItem
 MenuItem::MenuItem(String name, void (*select_callback)(void)) {
@@ -122,10 +123,20 @@ void Runner::select() {
     MenuItem* items[] = { _on_time, _off_time, new ReturnButton("Return", &should_exit) };
     Menu menu(items, 3);
 
-
     while (!should_exit) {
-        update(&menu);
-        draw(&menu);
+        if (light_on && millis() - last_change >= _on_time->getValue()) {
+            light_on = false;
+            last_change = millis();
+            digitalWrite(A5, LOW);
+        } else if (!light_on && millis() - last_change >= _off_time->getValue()) {
+            light_on = true;
+            last_change = millis();
+            digitalWrite(A5, HIGH);
+        }
+
+
+        Loop::update(&menu);
+        Loop::draw(&menu);
     }
 
 
