@@ -3,5 +3,6 @@
 
 #include <menu.h>
 #include <menu_item.h>
+#include <loop.h>
 
 #endif

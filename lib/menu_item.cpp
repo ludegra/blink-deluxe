@@ -1,4 +1,5 @@
 #include <menu_item.h>
+#include <menu.h>
 
 // MenuItem
 MenuItem::MenuItem(String name, void (*select_callback)(void)) {
@@ -74,4 +75,58 @@ void MenuVariable::right() {
 
 boolean MenuVariable::has_value() {
     return true;
+}
+
+// ReturnButton
+
+ReturnButton::ReturnButton(String name, bool *exit_variable) : MenuItem(name, NULL) {
+    this->_exit_variable = exit_variable;
+}
+
+String ReturnButton::getType() {
+    return "ReturnButton";
+}
+
+String ReturnButton::getDisplayString() {
+    return getName();
+}
+
+void ReturnButton::select() {
+    *_exit_variable = true;
+}
+
+// Runner
+
+Runner::Runner(String name, MenuVariable* on_time, MenuVariable* off_time) : MenuItem(name, NULL) {
+    this->_on_time = on_time;
+    this->_off_time = off_time;
+}
+
+String Runner::getType() {
+    return "Runner";
+}
+
+String Runner::getDisplayString() {
+    return "Run";
+}
+
+boolean Runner::has_value() {
+    return false;
+}
+
+void Runner::select() {
+    bool should_exit = false;
+    bool light_on = false;
+    unsigned long last_change = 0;
+
+    MenuItem* items[] = { _on_time, _off_time, new ReturnButton("Return", &should_exit) };
+    Menu menu(items, 3);
+
+
+    while (!should_exit) {
+        update(&menu);
+        draw(&menu);
+    }
+
+
 }
