@@ -28,9 +28,10 @@ unsigned long up_timestamp = 0;
 unsigned long down_timestamp = 0;
 unsigned long left_timestamp = 0;
 unsigned long right_timestamp = 0;
+unsigned long select_timestamp = 0;
 
 // Button hold time constants (in ms)
-const unsigned long hold_delays[] = {500, 500, 250, 250, 250, 250, 125};
+const unsigned long hold_delays[] = {500, 500, 250, 250, 250, 250, 125, 125, 125, 125, 75};
 
 // Button hold times (indices for hold_delays)
 int up_hold_time = 0;
@@ -39,6 +40,7 @@ int left_hold_time = 0;
 int right_hold_time = 0;
 
 const int thresholdValue = 1020;
+const unsigned long analogDelay = 500;
 
 int analogReadDigital(int analogPin)
 {
@@ -82,7 +84,7 @@ bool check_button_down(int pin, bool *state, bool allow_hold, unsigned long *tim
   return false;
 }
 
-bool check_button_down_analog(int pin, bool *state, bool allow_hold, unsigned long *timestamp = 0, int *delay_index = 0)
+bool check_button_down_analog(int pin, bool *state, unsigned long *timestamp)
 {
   if (analogReadDigital(pin) == HIGH)
   {
@@ -91,19 +93,10 @@ bool check_button_down_analog(int pin, bool *state, bool allow_hold, unsigned lo
     {
       *state = true;
       *timestamp = millis();
-      *delay_index = 0;
-      return true;
-    }
-    // If it is pressed, check if button is being held down
-    else if (allow_hold && millis() >= *timestamp + hold_delays[*delay_index])
-    {
-      *timestamp = millis();
-      int hold_time_max = sizeof(hold_delays) / sizeof(hold_delays[0]);
-      *delay_index = constrain(*delay_index + 1, 0, hold_time_max - 1);
       return true;
     }
   }
-  else
+  else if (millis() >= *timestamp + analogDelay)
   {
     // If button is not pressed, set state to false
     *state = false;
@@ -136,9 +129,10 @@ void Loop::update(Menu *menu)
     Serial.println("Right pressed");
     menu->right();
   }
-  if (check_button_down_analog(SELECT_PIN, &select_pressed, false))
+  if (check_button_down_analog(SELECT_PIN, &select_pressed, &select_timestamp))
   {
     Serial.println("Select pressed");
+    delay(100);
     menu->select();
   }
 }

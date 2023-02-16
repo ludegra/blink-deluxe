@@ -22,6 +22,8 @@ Menu::Menu() {
 }
 
 void Menu::select() {
+    Serial.println("Selecting item");
+    delay(100);
     _items[_selected]->select();
 }
 

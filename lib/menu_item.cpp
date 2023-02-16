@@ -39,11 +39,12 @@ boolean MenuItem::has_value() {
 }
 
 // MenuVariable
-MenuVariable::MenuVariable(String name, int default_value, int min, int max, int step) : MenuItem(name, NULL) {
+MenuVariable::MenuVariable(String name, String suffix, long default_value, long min, long max, long step) : MenuItem(name, NULL) {
     this->_value = default_value;
     this->_min = min;
     this->_max = max;
     this->_step = step;
+    this->_suffix = suffix;
 }
 
 String MenuVariable::getType() {
@@ -55,12 +56,10 @@ int MenuVariable::getValue() {
 }
 
 String MenuVariable::getDisplayString() {
-    return getName() + ": " + _value;
+    return getName() + ": " + _value + " " + _suffix;
 }
 
 void MenuVariable::left() {
-    Serial.println("Menu variable left function");
-
     if (_value <= _min) {
         return;
     }
@@ -69,9 +68,8 @@ void MenuVariable::left() {
 }
 
 void MenuVariable::right() {
-    Serial.println("Menu variable right function");
-
     if (_value >= _max) {
+        Serial.println(_max);
         return;
     }
 
@@ -119,8 +117,9 @@ boolean Runner::has_value() {
     return false;
 }
 
-// FIXME: This is a bit of a mess
 void Runner::select() {
+    Serial.println("Running");
+
     bool should_exit = false;
     bool light_on = false;
     unsigned long last_change = 0;
@@ -142,7 +141,9 @@ void Runner::select() {
 
         Loop::update(&menu);
         Loop::draw(&menu);
+
+        delay(20);
     }
 
-
+    Serial.println("Done running");
 }

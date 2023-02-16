@@ -22,12 +22,13 @@ public:
 
 class MenuVariable : public MenuItem {
 private:
-    int _value;
-    int _min;
-    int _max;
-    int _step;
+    long _value;
+    long _min;
+    long _max;
+    long _step;
+    String _suffix;
 public:
-    MenuVariable(String name, int default_value, int min, int max, int step);
+    MenuVariable(String name, String suffix, long default_value, long min, long max, long step);
 
     String getType();
     int getValue();

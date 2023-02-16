@@ -18,8 +18,8 @@
 
 Menu main_menu;
 
-MenuVariable *on_time = new MenuVariable("On time", 100, 0, 100000, 1);
-MenuVariable *off_time = new MenuVariable("Off time", 100, 0, 100000, 1);
+MenuVariable *on_time = new MenuVariable("On time", "ms", 100, 0, 100000, 1);
+MenuVariable *off_time = new MenuVariable("Off time", "ms", 100, 0, 100000, 1);
 Runner *runner = new Runner("Run", on_time, off_time);
 
 MenuItem* main_menu_items[] = {
