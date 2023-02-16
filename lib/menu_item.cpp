@@ -115,6 +115,7 @@ boolean Runner::has_value() {
     return false;
 }
 
+// FIXME: This is a bit of a mess
 void Runner::select() {
     bool should_exit = false;
     bool light_on = false;

@@ -88,7 +88,6 @@ void Loop::update(Menu *menu)
   {
     menu->right();
   }
-  // FIXME: Select button makes the program go bananas
   if (check_button_down(SELECT_PIN, &select_pressed, false)) {
     menu->select();
   }
