@@ -59,6 +59,8 @@ String MenuVariable::getDisplayString() {
 }
 
 void MenuVariable::left() {
+    Serial.println("Menu variable left function");
+
     if (_value <= _min) {
         return;
     }
@@ -67,6 +69,8 @@ void MenuVariable::left() {
 }
 
 void MenuVariable::right() {
+    Serial.println("Menu variable right function");
+
     if (_value >= _max) {
         return;
     }

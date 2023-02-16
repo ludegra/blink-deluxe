@@ -11,4 +11,6 @@ public:
     static void draw(Menu *menu);
 };
 
+int analogReadDigital(int analogPin);
+
 #endif
